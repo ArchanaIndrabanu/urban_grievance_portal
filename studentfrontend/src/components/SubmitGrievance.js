@@ -65,6 +65,7 @@ function SubmitGrievance() {
       complaintType: formData.complaintType,
       issueDescription: formData.issueDescription,
       preferredResolutionTime: formData.preferredResolutionTime,
+      status: "Submitted",
     };
 
     try {

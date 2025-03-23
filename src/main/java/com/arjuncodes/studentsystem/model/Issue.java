@@ -18,11 +18,15 @@ public class Issue {
     private String complaintType;
     private String issueDescription;
     private Date preferredResolutionTime;
+    
+    @Column(nullable = false)
+    private String status = "Pending"; // Default status
 
     public Issue() {
     }
 
-    public Issue(String issueId, String fullName, String contactNumber, String email, String address, String complaintType, String issueDescription, Date preferredResolutionTime) {
+    public Issue(String issueId, String fullName, String contactNumber, String email, String address, 
+                 String complaintType, String issueDescription, Date preferredResolutionTime, String status) {
         this.issueId = issueId;
         this.fullName = fullName;
         this.contactNumber = contactNumber;
@@ -31,6 +35,7 @@ public class Issue {
         this.complaintType = complaintType;
         this.issueDescription = issueDescription;
         this.preferredResolutionTime = preferredResolutionTime;
+        this.status = status;
     }
 
     // Getters and Setters
@@ -104,5 +109,13 @@ public class Issue {
 
     public void setPreferredResolutionTime(Date preferredResolutionTime) {
         this.preferredResolutionTime = preferredResolutionTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

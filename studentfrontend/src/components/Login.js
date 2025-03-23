@@ -10,18 +10,20 @@ export default function User() {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    setMessage(""); 
+    setMessage("");
     const user = { username, password };
-
+  
     try {
       const response = await fetch('http://localhost:8080/user/checkuser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
       });
-
+  
       if (response.ok) {
-        navigate('/SubmitGrievance');
+        const userId = await response.text(); // Retrieve user ID from response
+        localStorage.setItem("userId", userId); // Store user ID in localStorage
+        navigate('/SubmitGrievance'); // Navigate to grievance submission
       } else {
         setMessage("Incorrect Username/Password ❌");
       }
@@ -29,7 +31,7 @@ export default function User() {
       console.error("Error during login:", error);
       setMessage("Server error. Please try again later.");
     }
-  };
+  };  
 
   return (
     <Container>

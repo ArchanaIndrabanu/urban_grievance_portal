@@ -30,7 +30,7 @@ function SubmitGrievance() {
     images: null,
   });
 
-  const userId = "U123";
+  const userId = localStorage.getItem("userId") || "U000";
   const issueCategoryIds = {
     "Power Outage": "PO",
     "Voltage Fluctuation": "VF",

@@ -19,14 +19,13 @@ public class UserController {
         userService.saveUser(user);
         return "New user is added";
     }
-
     @PostMapping("/checkuser")
-    public ResponseEntity<String> checkUser(@RequestBody User user) {
+    public ResponseEntity<?> checkUser(@RequestBody User user) {
         User existingUser = userService.findByUsername(user.getUsername());
         if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
-            return ResponseEntity.ok("Login Success");
+            return ResponseEntity.ok(existingUser.getId()); // Return the user ID on success
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect Username/Password");
         }
-}
+    }    
 }

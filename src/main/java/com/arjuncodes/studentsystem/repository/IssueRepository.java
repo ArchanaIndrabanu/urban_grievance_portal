@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface IssueRepository extends JpaRepository<Issue, Long> {
     List<Issue> findByStatus(String status);
+    List<Issue> findByUserId(int userId); // Added to fetch issues by userId
 }

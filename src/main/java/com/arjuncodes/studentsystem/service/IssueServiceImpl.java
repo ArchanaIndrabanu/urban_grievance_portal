@@ -33,6 +33,11 @@ public class IssueServiceImpl implements IssueService {
         return issueRepository.findByStatus(status);
     }
 
+    @Override
+    public List<Issue> getIssuesByUserId(int userId) {
+        return issueRepository.findByUserId(userId);
+    }
+
     public void updateIssueStatus(Long id, String status) {
         Optional<Issue> optionalIssue = issueRepository.findById(id);
         if (optionalIssue.isPresent()) {

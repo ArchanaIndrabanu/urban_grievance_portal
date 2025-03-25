@@ -2,28 +2,32 @@ import React, { useState } from 'react';
 import { TextField, Container, Paper, Button, Box, Typography, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-export default function User() {
+export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault();
     setMessage("");
     const user = { username, password };
-  
+
     try {
       const response = await fetch('http://localhost:8080/user/checkuser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
       });
-  
+
       if (response.ok) {
-        const userId = await response.text(); // Retrieve user ID from response
-        localStorage.setItem("userId", userId); // Store user ID in localStorage
-        navigate('/SubmitGrievance'); // Navigate to grievance submission
+        const userData = await response.json();
+        localStorage.setItem("userId", userData.id);
+        localStorage.setItem("userName", userData.name);
+        localStorage.setItem("contactNumber", userData.contactNumber);
+        localStorage.setItem("email", userData.email);
+        localStorage.setItem("address", userData.address);
+        navigate('/submit-grievance');
       } else {
         setMessage("Incorrect Username/Password ❌");
       }
@@ -31,7 +35,7 @@ export default function User() {
       console.error("Error during login:", error);
       setMessage("Server error. Please try again later.");
     }
-  };  
+  };
 
   return (
     <Container>
@@ -62,15 +66,17 @@ export default function User() {
           >
             Login
           </Button>
-          {message && <Typography sx={{ color: message.includes("Success") ? "green" : "red", mt: 2 }}>{message}</Typography>}
-
-          {/* Register Link */}
+          {message && (
+            <Typography sx={{ color: message.includes("Success") ? "green" : "red", mt: 2 }}>
+              {message}
+            </Typography>
+          )}
           <Typography sx={{ mt: 2 }}>
             Don't have an account?{" "}
             <Link 
               component="button" 
               variant="body2" 
-              onClick={() => navigate('/Register')} 
+              onClick={() => navigate('/register')}
               sx={{ color: "#1976d2", cursor: "pointer" }}
             >
               Register here

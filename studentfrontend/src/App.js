@@ -4,11 +4,12 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Appbar from "./components/Appbar";
 import Home from "./components/Home";
-import Login from "./components/Login"; // Import the User component
+import Login from "./components/Login";
 import Register from "./components/Register";
 import SubmitGrievance from "./components/SubmitGrievance";
+import Dashboard from "./components/Dashboard"; // Import the new Dashboard component
 
-const theme = createTheme(); // Create a default MUI theme
+const theme = createTheme();
 
 export default function App() {
   return (
@@ -18,9 +19,10 @@ export default function App() {
         <Appbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/SubmitGrievance" element={<SubmitGrievance />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/submit-grievance" element={<SubmitGrievance />} />
+          <Route path="/dashboard" element={<Dashboard />} /> {/* Added Dashboard route */}
         </Routes>
       </Router>
     </ThemeProvider>

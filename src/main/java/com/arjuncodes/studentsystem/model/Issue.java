@@ -1,7 +1,8 @@
 package com.arjuncodes.studentsystem.model;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "issue")
@@ -10,30 +11,27 @@ public class Issue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String issueId;
-    private String fullName;
-    private String contactNumber;
-    private String email;
-    private String address;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user; // Reference to the User entity
+
     private String complaintType;
     private String issueDescription;
-    private Date preferredResolutionTime;
+    private LocalDate preferredResolutionDate;
+    private LocalTime preferredResolutionTime;
     
     @Column(nullable = false)
-    private String status = "Pending"; // Default status
+    private String status = "Pending";
 
     public Issue() {
     }
 
-    public Issue(String issueId, String fullName, String contactNumber, String email, String address, 
-                 String complaintType, String issueDescription, Date preferredResolutionTime, String status) {
-        this.issueId = issueId;
-        this.fullName = fullName;
-        this.contactNumber = contactNumber;
-        this.email = email;
-        this.address = address;
+    public Issue(User user, String complaintType, String issueDescription, LocalDate preferredResolutionDate, 
+                 LocalTime preferredResolutionTime, String status) {
+        this.user = user;
         this.complaintType = complaintType;
         this.issueDescription = issueDescription;
+        this.preferredResolutionDate = preferredResolutionDate;
         this.preferredResolutionTime = preferredResolutionTime;
         this.status = status;
     }
@@ -47,44 +45,12 @@ public class Issue {
         this.id = id;
     }
 
-    public String getIssueId() {
-        return issueId;
+    public User getUser() {
+        return user;
     }
 
-    public void setIssueId(String issueId) {
-        this.issueId = issueId;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getComplaintType() {
@@ -103,11 +69,19 @@ public class Issue {
         this.issueDescription = issueDescription;
     }
 
-    public Date getPreferredResolutionTime() {
+    public LocalDate getPreferredResolutionDate() {
+        return preferredResolutionDate;
+    }
+
+    public void setPreferredResolutionDate(LocalDate preferredResolutionDate) {
+        this.preferredResolutionDate = preferredResolutionDate;
+    }
+
+    public LocalTime getPreferredResolutionTime() {
         return preferredResolutionTime;
     }
 
-    public void setPreferredResolutionTime(Date preferredResolutionTime) {
+    public void setPreferredResolutionTime(LocalTime preferredResolutionTime) {
         this.preferredResolutionTime = preferredResolutionTime;
     }
 
